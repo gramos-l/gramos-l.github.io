@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffc0e5 0%, #ffb3d9 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decoraciones en las esquinas */
+        .decoration {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .decoration:nth-child(1) {
+            top: 20px;
+            left: 20px;
+            background: #ff69b4;
+        }
+
+        .decoration:nth-child(2) {
+            top: 50px;
+            right: 40px;
+            background: #ff1493;
+            width: 80px;
+            height: 80px;
+        }
+
+        .decoration:nth-child(3) {
+            bottom: 30px;
+            left: 50px;
+            background: #ff69b4;
+            width: 90px;
+            height: 90px;
+        }
+
+        .decoration:nth-child(4) {
+            bottom: 60px;
+            right: 30px;
+            background: #ff1493;
+            width: 70px;
+            height: 70px;
+        }
+
+        .decoration:nth-child(5) {
+            top: 40%;
+            left: 10px;
+            background: #ff69b4;
+            width: 60px;
+            height: 60px;
+        }
+
+        .decoration:nth-child(6) {
+            top: 60%;
+            right: 15px;
+            background: #ff1493;
+            width: 65px;
+            height: 65px;
+        }
+
+        /* Estrellas decorativas */
+        .star {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 25px solid rgba(255, 20, 147, 0.4);
+        }
+
+        .star:nth-child(7) {
+            top: 100px;
+            left: 100px;
+            transform: rotate(35deg);
+        }
+
+        .star:nth-child(8) {
+            bottom: 120px;
+            right: 80px;
+            transform: rotate(-20deg);
+        }
+
+        .invitation {
+            text-align: center;
+            z-index: 10;
+            padding: 40px;
+        }
+
+        .invitation h1 {
+            font-size: 4em;
+            color: white;
+            text-shadow: 
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000,
+                2px 2px 0 #000;
+            line-height: 1.4;
+        }
+
+        .invitation .highlight {
+            color: #ff1493;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="decoration"></div>
+    <div class="decoration"></div>
+    <div class="decoration"></div>
+    <div class="decoration"></div>
+    <div class="decoration"></div>
+    <div class="decoration"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+
+    <div class="invitation">
+        <h1>
+            Quedas invitado<br>
+            a los<br>
+            <span class="highlight">Jueves Gays</span>
+        </h1>
+    </div>
+</body>
+</html>
