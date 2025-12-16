@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación</title>
+    <title>Jueves Gays</title>
     <style>
         * {
             margin: 0;
@@ -12,133 +12,361 @@
         }
 
         body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #ffc0e5 0%, #ffb3d9 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            overflow-x: hidden;
             position: relative;
-            overflow: hidden;
         }
 
-        /* Decoraciones en las esquinas */
-        .decoration {
+        /* Formas decorativas en el fondo */
+        .shape {
             position: absolute;
-            width: 100px;
-            height: 100px;
             border-radius: 50%;
-            opacity: 0.3;
+            opacity: 0.4;
+            animation: float 6s ease-in-out infinite;
         }
 
-        .decoration:nth-child(1) {
-            top: 20px;
-            left: 20px;
-            background: #ff69b4;
-        }
-
-        .decoration:nth-child(2) {
-            top: 50px;
-            right: 40px;
-            background: #ff1493;
+        .shape:nth-child(1) {
             width: 80px;
             height: 80px;
+            background: #ffb3d9;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
         }
 
-        .decoration:nth-child(3) {
-            bottom: 30px;
-            left: 50px;
-            background: #ff69b4;
-            width: 90px;
-            height: 90px;
-        }
-
-        .decoration:nth-child(4) {
-            bottom: 60px;
-            right: 30px;
-            background: #ff1493;
-            width: 70px;
-            height: 70px;
-        }
-
-        .decoration:nth-child(5) {
-            top: 40%;
-            left: 10px;
-            background: #ff69b4;
+        .shape:nth-child(2) {
             width: 60px;
             height: 60px;
+            background: #ffc9e3;
+            top: 20%;
+            right: 15%;
+            animation-delay: 1s;
         }
 
-        .decoration:nth-child(6) {
-            top: 60%;
-            right: 15px;
-            background: #ff1493;
-            width: 65px;
-            height: 65px;
+        .shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            background: #ffd9ec;
+            bottom: 30%;
+            left: 5%;
+            animation-delay: 2s;
         }
 
-        /* Estrellas decorativas */
-        .star {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 25px solid rgba(255, 20, 147, 0.4);
+        .shape:nth-child(4) {
+            width: 70px;
+            height: 70px;
+            background: #ffe0f0;
+            top: 50%;
+            right: 10%;
+            animation-delay: 1.5s;
         }
 
-        .star:nth-child(7) {
-            top: 100px;
-            left: 100px;
-            transform: rotate(35deg);
+        .shape:nth-child(5) {
+            width: 90px;
+            height: 90px;
+            background: #ffcceb;
+            bottom: 15%;
+            right: 20%;
+            animation-delay: 0.5s;
         }
 
-        .star:nth-child(8) {
-            bottom: 120px;
-            right: 80px;
-            transform: rotate(-20deg);
+        .shape:nth-child(6) {
+            width: 50px;
+            height: 50px;
+            background: #ffb8e6;
+            top: 70%;
+            left: 15%;
+            animation-delay: 2.5s;
         }
 
-        .invitation {
-            text-align: center;
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        /* Contenedor principal */
+        .container {
+            position: relative;
             z-index: 10;
-            padding: 40px;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 500px;
+            width: 100%;
         }
 
-        .invitation h1 {
-            font-size: 4em;
+        /* Texto principal */
+        .invitation {
             color: white;
-            text-shadow: 
-                -2px -2px 0 #000,
-                2px -2px 0 #000,
-                -2px 2px 0 #000,
-                2px 2px 0 #000;
-            line-height: 1.4;
+            font-size: 3em;
+            font-weight: bold;
+            line-height: 1.3;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .invitation .highlight {
-            color: #ff1493;
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Sección de logros */
+        .achievements-section {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+
+        details {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        summary {
             font-size: 1.3em;
             font-weight: bold;
+            color: #ff1493;
+            cursor: pointer;
+            padding: 10px;
+            list-style: none;
+            text-align: center;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: ' ▼';
+            font-size: 0.8em;
+        }
+
+        details[open] summary::after {
+            content: ' ▲';
+        }
+
+        .achievements-list {
+            margin-top: 15px;
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .achievements-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .achievements-list::-webkit-scrollbar-track {
+            background: #ffe0f0;
+            border-radius: 10px;
+        }
+
+        .achievements-list::-webkit-scrollbar-thumb {
+            background: #ff69b4;
+            border-radius: 10px;
+        }
+
+        .achievements-list::-webkit-scrollbar-thumb:hover {
+            background: #ff1493;
+        }
+
+        .achievement {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            background: linear-gradient(135deg, #ffe0f0 0%, #ffc9e3 100%);
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+
+        .achievement:hover {
+            transform: translateX(5px);
+        }
+
+        .achievement input[type="checkbox"] {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #ff1493;
+        }
+
+        .achievement .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .achievement label {
+            font-size: 1em;
+            color: #333;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .achievement.completed {
+            opacity: 0.7;
+            background: linear-gradient(135deg, #d4d4d4 0%, #b8b8b8 100%);
+        }
+
+        .achievement.completed label {
+            text-decoration: line-through;
+        }
+
+        /* Warning message */
+        .warning {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: #ff4444;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .warning.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 480px) {
+            .invitation {
+                font-size: 2.2em;
+            }
+
+            .achievement label {
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="decoration"></div>
-    <div class="decoration"></div>
-    <div class="decoration"></div>
-    <div class="decoration"></div>
-    <div class="decoration"></div>
-    <div class="decoration"></div>
-    <div class="star"></div>
-    <div class="star"></div>
+    <!-- Warning message -->
+    <div class="warning" id="warning">¡No eres Jaime!</div>
 
-    <div class="invitation">
-        <h1>
-            Quedas invitade<br>
-            a los<br>
-            <span class="highlight">Jueves Gays</span>
-        </h1>
+    <!-- Formas decorativas -->
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+
+    <!-- Contenido principal -->
+    <div class="container">
+        <div class="invitation">
+            Quedas<br>
+            Invitade<br>
+            A los<br>
+            Jueves Gays
+        </div>
     </div>
+
+    <!-- Sección de logros -->
+    <div class="achievements-section">
+        <details>
+            <summary>🏆 Logros</summary>
+            <div class="achievements-list">
+                <div class="achievement" data-id="0">
+                    <input type="checkbox" id="logro0">
+                    <span class="emoji">💅</span>
+                    <label for="logro0">Facha in this gays</label>
+                </div>
+                <div class="achievement" data-id="1">
+                    <input type="checkbox" id="logro1">
+                    <span class="emoji">🎉</span>
+                    <label for="logro1">Asistir a 20 Jueves Gays</label>
+                </div>
+                <div class="achievement" data-id="2">
+                    <input type="checkbox" id="logro2">
+                    <span class="emoji">👐</span>
+                    <label for="logro2">Meter mano a miembros</label>
+                </div>
+                <div class="achievement" data-id="3">
+                    <input type="checkbox" id="logro3">
+                    <span class="emoji">⭐</span>
+                    <label for="logro3">Carol's favorite's</label>
+                </div>
+                <div class="achievement" data-id="4">
+                    <input type="checkbox" id="logro4">
+                    <span class="emoji">🤪</span>
+                    <label for="logro4">Conocer los Martes locos</label>
+                </div>
+                <div class="achievement" data-id="5">
+                    <input type="checkbox" id="logro5">
+                    <span class="emoji">🖼️</span>
+                    <label for="logro5">Tener un retrato en el 100mon</label>
+                </div>
+            </div>
+        </details>
+    </div>
+
+    <script>
+        // Función para mostrar el warning
+        function showWarning() {
+            const warning = document.getElementById('warning');
+            warning.classList.add('show');
+            setTimeout(() => {
+                warning.classList.remove('show');
+            }, 3000);
+        }
+
+        // Cargar estado de los checkboxes desde localStorage
+        window.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.achievement input[type="checkbox"]');
+            
+            checkboxes.forEach(checkbox => {
+                const saved = localStorage.getItem(checkbox.id);
+                if (saved === 'true') {
+                    checkbox.checked = true;
+                    checkbox.closest('.achievement').classList.add('completed');
+                }
+
+                checkbox.addEventListener('change', (e) => {
+                    // Mostrar warning solo cuando se marca el logro5 (logro de Jaime)
+                    if (checkbox.checked && checkbox.id === 'logro5') {
+                        showWarning();
+                    }
+                    
+                    localStorage.setItem(checkbox.id, checkbox.checked);
+                    if (checkbox.checked) {
+                        checkbox.closest('.achievement').classList.add('completed');
+                    } else {
+                        checkbox.closest('.achievement').classList.remove('completed');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
