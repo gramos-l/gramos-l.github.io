@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -12,363 +11,483 @@
             box-sizing: border-box;
         }
 
-```
-    body {
-        font-family: 'Arial', sans-serif;
-        background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px;
-        overflow-x: hidden;
-        position: relative;
-    }
-
-    /* Formas decorativas en el fondo */
-    .shape {
-        position: absolute;
-        border-radius: 50%;
-        opacity: 0.4;
-        animation: float 6s ease-in-out infinite;
-    }
-
-    .shape:nth-child(1) {
-        width: 80px;
-        height: 80px;
-        background: #ffb3d9;
-        top: 10%;
-        left: 10%;
-        animation-delay: 0s;
-    }
-
-    .shape:nth-child(2) {
-        width: 60px;
-        height: 60px;
-        background: #ffc9e3;
-        top: 20%;
-        right: 15%;
-        animation-delay: 1s;
-    }
-
-    .shape:nth-child(3) {
-        width: 100px;
-        height: 100px;
-        background: #ffd9ec;
-        bottom: 30%;
-        left: 5%;
-        animation-delay: 2s;
-    }
-
-    .shape:nth-child(4) {
-        width: 70px;
-        height: 70px;
-        background: #ffe0f0;
-        top: 50%;
-        right: 10%;
-        animation-delay: 1.5s;
-    }
-
-    .shape:nth-child(5) {
-        width: 90px;
-        height: 90px;
-        background: #ffcceb;
-        bottom: 15%;
-        right: 20%;
-        animation-delay: 0.5s;
-    }
-
-    .shape:nth-child(6) {
-        width: 50px;
-        height: 50px;
-        background: #ffb8e6;
-        top: 70%;
-        left: 15%;
-        animation-delay: 2.5s;
-    }
-
-    @keyframes float {
-        0%, 100% {
-            transform: translateY(0) rotate(0deg);
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, 
+                #FF1493 0%, 
+                #FF69B4 15%, 
+                #FFB6C1 30%,
+                #FFC0CB 45%,
+                #FF69B4 60%, 
+                #FF1493 75%,
+                #C71585 90%,
+                #FF1493 100%);
+            background-size: 400% 400%;
+            animation: pinkGradient 6s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
         }
-        50% {
-            transform: translateY(-20px) rotate(10deg);
+
+        @keyframes pinkGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-    }
 
-    /* Modal de selección de género */
-    #genderModal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        backdrop-filter: blur(5px);
-    }
-
-    #genderModal.hidden {
-        display: none;
-    }
-
-    .modal-content {
-        background: rgba(255, 255, 255, 0.98);
-        border-radius: 20px;
-        padding: 40px;
-        max-width: 400px;
-        width: 90%;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-        animation: modalAppear 0.5s ease;
-    }
-
-    @keyframes modalAppear {
-        from {
-            transform: scale(0.8);
+        /* Estrellas brillantes */
+        .sparkle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #FFB6C1;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: sparkleAnimation 2s ease-in-out infinite;
             opacity: 0;
-        }
-        to {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-
-    .modal-title {
-        font-size: 2em;
-        font-weight: bold;
-        color: #ff1493;
-        text-align: center;
-        margin-bottom: 30px;
-    }
-
-    .gender-options {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .gender-option {
-        background: linear-gradient(135deg, #ffe0f0 0%, #ffc9e3 100%);
-        border: none;
-        border-radius: 12px;
-        padding: 18px;
-        font-size: 1.1em;
-        font-weight: bold;
-        color: #333;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .gender-option:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        background: linear-gradient(135deg, #ffc9e3 0%, #ffb3d9 100%);
-    }
-
-    .gender-option:active {
-        transform: translateY(0);
-    }
-
-    /* Contenedor principal */
-    .container {
-        position: relative;
-        z-index: 10;
-        text-align: center;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        max-width: 500px;
-        width: 100%;
-    }
-
-    /* Texto principal */
-    .invitation {
-        color: white;
-        font-size: 3em;
-        font-weight: bold;
-        line-height: 1.3;
-        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-        margin-bottom: 40px;
-        animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.05);
-        }
-    }
-
-    /* Sección de logros */
-    .achievements-section {
-        position: relative;
-        z-index: 10;
-        width: 100%;
-        max-width: 500px;
-        margin-bottom: 20px;
-    }
-
-    details {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
-        padding: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    summary {
-        font-size: 1.3em;
-        font-weight: bold;
-        color: #ff1493;
-        cursor: pointer;
-        padding: 10px;
-        list-style: none;
-        text-align: center;
-    }
-
-    summary::-webkit-details-marker {
-        display: none;
-    }
-
-    summary::after {
-        content: ' ▼';
-        font-size: 0.8em;
-    }
-
-    details[open] summary::after {
-        content: ' ▲';
-    }
-
-    .achievements-list {
-        margin-top: 15px;
-        text-align: left;
-        max-height: 400px;
-        overflow-y: auto;
-        padding-right: 5px;
-    }
-
-    .achievements-list::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    .achievements-list::-webkit-scrollbar-track {
-        background: #ffe0f0;
-        border-radius: 10px;
-    }
-
-    .achievements-list::-webkit-scrollbar-thumb {
-        background: #ff69b4;
-        border-radius: 10px;
-    }
-
-    .achievements-list::-webkit-scrollbar-thumb:hover {
-        background: #ff1493;
-    }
-
-    .achievement {
-        display: flex;
-        align-items: center;
-        padding: 12px;
-        margin: 8px 0;
-        background: linear-gradient(135deg, #ffe0f0 0%, #ffc9e3 100%);
-        border-radius: 10px;
-        transition: transform 0.2s;
-    }
-
-    .achievement:hover {
-        transform: translateX(5px);
-    }
-
-    .achievement input[type="checkbox"] {
-        width: 25px;
-        height: 25px;
-        margin-right: 10px;
-        cursor: pointer;
-        accent-color: #ff1493;
-    }
-
-    .achievement .emoji {
-        font-size: 1.5em;
-        margin-right: 10px;
-    }
-
-    .achievement label {
-        font-size: 1em;
-        color: #333;
-        cursor: pointer;
-        flex: 1;
-    }
-
-    .achievement.completed {
-        opacity: 0.7;
-        background: linear-gradient(135deg, #d4d4d4 0%, #b8b8b8 100%);
-    }
-
-    .achievement.completed label {
-        text-decoration: line-through;
-    }
-
-    /* Warning message */
-    .warning {
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%) translateY(-100px);
-        background: #ff4444;
-        color: white;
-        padding: 15px 30px;
-        border-radius: 10px;
-        font-weight: bold;
-        font-size: 1.2em;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        z-index: 1000;
-        opacity: 0;
-        transition: all 0.3s ease;
-    }
-
-    .warning.show {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-    }
-
-    @media (max-width: 480px) {
-        .invitation {
-            font-size: 2.2em;
+            filter: drop-shadow(0 0 8px #FF69B4);
         }
 
-        .achievement label {
-            font-size: 0.9em;
+        @keyframes sparkleAnimation {
+            0%, 100% { 
+                opacity: 0; 
+                transform: scale(0) rotate(0deg);
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1) rotate(180deg);
+            }
+        }
+
+        .sparkle:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 25%; right: 15%; animation-delay: 0.4s; }
+        .sparkle:nth-child(3) { top: 60%; left: 10%; animation-delay: 0.8s; }
+        .sparkle:nth-child(4) { top: 45%; right: 25%; animation-delay: 1.2s; }
+        .sparkle:nth-child(5) { bottom: 20%; left: 30%; animation-delay: 1.6s; }
+        .sparkle:nth-child(6) { bottom: 35%; right: 20%; animation-delay: 0.2s; }
+        .sparkle:nth-child(7) { top: 70%; left: 45%; animation-delay: 0.6s; }
+        .sparkle:nth-child(8) { top: 15%; left: 60%; animation-delay: 1s; }
+
+        /* Corazones flotantes */
+        .heart {
+            position: absolute;
+            font-size: 30px;
+            animation: floatHeart 6s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatHeart {
+            0%, 100% {
+                transform: translateY(0) rotate(-10deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+            }
+        }
+
+        .heart:nth-child(9) { top: 20%; left: 8%; animation-delay: 0s; }
+        .heart:nth-child(10) { top: 50%; right: 12%; animation-delay: 1s; }
+        .heart:nth-child(11) { bottom: 25%; left: 15%; animation-delay: 2s; }
+        .heart:nth-child(12) { top: 65%; right: 8%; animation-delay: 1.5s; }
+
+        /* Burbujas de colores */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatBubble 8s ease-in-out infinite;
+            opacity: 0.6;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes floatBubble {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-40px) scale(1.1);
+            }
+        }
+
+        .bubble:nth-child(13) {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 105, 180, 0.5);
+            top: 15%;
+            left: 35%;
+            animation-delay: 0s;
+        }
+
+        .bubble:nth-child(14) {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 182, 193, 0.5);
+            top: 55%;
+            left: 5%;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(15) {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 20, 147, 0.5);
+            bottom: 30%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        /* Modal de selección de género */
+        #genderModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+
+        #genderModal.hidden {
+            display: none;
         }
 
         .modal-content {
-            padding: 30px 20px;
+            background: linear-gradient(135deg, #FF1493 0%, #FF69B4 50%, #FFB6C1 100%);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(255, 20, 147, 0.8),
+                        0 0 60px rgba(255, 105, 180, 0.6),
+                        inset 0 0 40px rgba(255, 182, 193, 0.3);
+            animation: modalAppear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 4px solid rgba(255, 192, 203, 0.5);
+        }
+
+        @keyframes modalAppear {
+            from {
+                transform: scale(0.5) rotate(-5deg);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
         }
 
         .modal-title {
-            font-size: 1.6em;
+            font-size: 2.2em;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+            animation: titlePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .gender-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
         .gender-option {
-            font-size: 1em;
-            padding: 15px;
+            background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E1 50%, #FFB6C1 100%);
+            border: 3px solid #FF69B4;
+            border-radius: 20px;
+            padding: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #C71585;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            position: relative;
+            overflow: hidden;
         }
-    }
-</style>
-```
 
+        .gender-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 182, 193, 0.8), transparent);
+            transition: left 0.5s;
+        }
+
+        .gender-option:hover::before {
+            left: 100%;
+        }
+
+        .gender-option:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.6);
+            border-color: #FF1493;
+            background: linear-gradient(135deg, #FFE4E1 0%, #FFB6C1 50%, #FF69B4 100%);
+        }
+
+        .gender-option:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Texto principal */
+        .invitation {
+            color: white;
+            font-size: 3.5em;
+            font-weight: bold;
+            line-height: 1.3;
+            text-shadow: 
+                3px 3px 0px #FF69B4,
+                6px 6px 0px #FF1493,
+                9px 9px 20px rgba(199, 21, 133, 0.6);
+            margin-bottom: 40px;
+            animation: pulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 182, 193, 0.8));
+        }
+
+        .invitation .easter-egg-letter {
+            cursor: default;
+            display: inline-block;
+        }
+
+        .invitation.smaller-text {
+            font-size: 2.5em;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Sección de logros */
+        .achievements-section {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 550px;
+            margin-bottom: 20px;
+        }
+
+        details {
+            background: linear-gradient(135deg, #FF69B4 0%, #FF1493 50%, #C71585 100%);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.6),
+                        0 0 40px rgba(255, 105, 180, 0.4);
+            border: 3px solid rgba(255, 182, 193, 0.5);
+        }
+
+        summary {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            list-style: none;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: ' ▼';
+            font-size: 0.8em;
+        }
+
+        details[open] summary::after {
+            content: ' ▲';
+        }
+
+        .achievements-list {
+            margin-top: 20px;
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .achievements-list::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .achievements-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .achievements-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+        }
+
+        .achievements-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .achievement {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: linear-gradient(135deg, rgba(255, 240, 245, 0.98) 0%, rgba(255, 182, 193, 0.95) 100%);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(255, 105, 180, 0.3);
+            border: 2px solid rgba(255, 105, 180, 0.2);
+        }
+
+        .achievement:hover {
+            transform: translateX(8px);
+            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.5);
+            border-color: #FF69B4;
+        }
+
+        .achievement input[type="checkbox"] {
+            width: 28px;
+            height: 28px;
+            margin-right: 12px;
+            cursor: pointer;
+            accent-color: #ff1493;
+        }
+
+        .achievement .emoji {
+            font-size: 1.8em;
+            margin-right: 12px;
+        }
+
+        .achievement label {
+            font-size: 1.1em;
+            color: #333;
+            cursor: pointer;
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .achievement.completed {
+            opacity: 0.6;
+            background: linear-gradient(135deg, rgba(200, 200, 200, 0.9) 0%, rgba(180, 180, 180, 0.9) 100%);
+        }
+
+        .achievement.completed label {
+            text-decoration: line-through;
+        }
+
+        /* Warning message */
+        .warning {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.3em;
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.4s ease;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .warning.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Welcome banner */
+        .welcome-banner {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: white;
+            padding: 25px 50px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.5em;
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.4s ease;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-banner.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 480px) {
+            .invitation {
+                font-size: 2.5em;
+            }
+
+            .invitation.smaller-text {
+                font-size: 1.8em;
+            }
+
+            .achievement label {
+                font-size: 0.95em;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+
+            .modal-title {
+                font-size: 1.8em;
+            }
+
+            .gender-option {
+                font-size: 1em;
+                padding: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Modal de selección de género -->
     <div id="genderModal">
         <div class="modal-content">
-            <div class="modal-title">¿Cómo te identificas?</div>
+            <div class="modal-title">✨ ¿Cómo te identificas? ✨</div>
             <div class="gender-options">
                 <button class="gender-option" data-gender="hombre">👨 Hombre</button>
                 <button class="gender-option" data-gender="mujer">👩 Mujer</button>
@@ -378,143 +497,182 @@
         </div>
     </div>
 
-```
-<!-- Warning message -->
-<div class="warning" id="warning">¡No eres Jaime!</div>
+    <!-- Warning message -->
+    <div class="warning" id="warning">¡No eres Jaime!</div>
 
-<!-- Formas decorativas -->
-<div class="shape"></div>
-<div class="shape"></div>
-<div class="shape"></div>
-<div class="shape"></div>
-<div class="shape"></div>
-<div class="shape"></div>
+    <!-- Welcome banner -->
+    <div class="welcome-banner" id="welcomeBanner">🎉 ¡Bienvenido Jaime! 🎉</div>
 
-<!-- Contenido principal -->
-<div class="container">
-    <div class="invitation" id="invitationText">
-        Quedas<br>
-        Invitade<br>
-        A los<br>
-        Jueves Gays
-    </div>
-</div>
+    <!-- Decoraciones -->
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    <div class="sparkle"></div>
+    
+    <div class="heart">💖</div>
+    <div class="heart">💕</div>
+    <div class="heart">💗</div>
+    <div class="heart">💝</div>
+    
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
 
-<!-- Sección de logros -->
-<div class="achievements-section">
-    <details>
-        <summary>🏆 Logros</summary>
-        <div class="achievements-list">
-            <div class="achievement" data-id="0">
-                <input type="checkbox" id="logro0">
-                <span class="emoji">💅</span>
-                <label for="logro0">Facha in this gays</label>
-            </div>
-            <div class="achievement" data-id="1">
-                <input type="checkbox" id="logro1">
-                <span class="emoji">🎉</span>
-                <label for="logro1">Asistir a 20 Jueves Gays</label>
-            </div>
-            <div class="achievement" data-id="2">
-                <input type="checkbox" id="logro2">
-                <span class="emoji">👐</span>
-                <label for="logro2">Meter mano a miembros</label>
-            </div>
-            <div class="achievement" data-id="3">
-                <input type="checkbox" id="logro3">
-                <span class="emoji">⭐</span>
-                <label for="logro3">Carol's favorite's</label>
-            </div>
-            <div class="achievement" data-id="4">
-                <input type="checkbox" id="logro4">
-                <span class="emoji">🤪</span>
-                <label for="logro4">Conocer los Martes locos</label>
-            </div>
-            <div class="achievement" data-id="5">
-                <input type="checkbox" id="logro5">
-                <span class="emoji">🖼️</span>
-                <label for="logro5">Tener un retrato en el 100mon</label>
-            </div>
+    <!-- Contenido principal -->
+    <div class="container">
+        <div class="invitation" id="invitationText">
+            Quedas<br>
+            Invitade<br>
+            A los<br>
+            Jueves Gays
         </div>
-    </details>
-</div>
+    </div>
 
-<script>
-    // Variables globales
-    let selectedGender = null;
-    const modal = document.getElementById('genderModal');
-    const invitationText = document.getElementById('invitationText');
+    <!-- Sección de logros -->
+    <div class="achievements-section">
+        <details>
+            <summary>🏆 Logros 🏆</summary>
+            <div class="achievements-list">
+                <div class="achievement" data-id="0">
+                    <input type="checkbox" id="logro0">
+                    <span class="emoji">💅</span>
+                    <label for="logro0">Facha in this gays</label>
+                </div>
+                <div class="achievement" data-id="1">
+                    <input type="checkbox" id="logro1">
+                    <span class="emoji">🎉</span>
+                    <label for="logro1">Asistir a 20 Jueves Gays</label>
+                </div>
+                <div class="achievement" data-id="2">
+                    <input type="checkbox" id="logro2">
+                    <span class="emoji">👐</span>
+                    <label for="logro2">Meter mano a miembros</label>
+                </div>
+                <div class="achievement" data-id="3">
+                    <input type="checkbox" id="logro3">
+                    <span class="emoji">⭐</span>
+                    <label for="logro3">Carol's favorite's</label>
+                </div>
+                <div class="achievement" data-id="4">
+                    <input type="checkbox" id="logro4">
+                    <span class="emoji">🤪</span>
+                    <label for="logro4">Conocer los Martes locos</label>
+                </div>
+                <div class="achievement" data-id="5">
+                    <input type="checkbox" id="logro5">
+                    <span class="emoji">🖼️</span>
+                    <label for="logro5">Tener un retrato en el 100mon</label>
+                </div>
+            </div>
+        </details>
+    </div>
 
-    // Función para actualizar el texto de invitación según el género
-    function updateInvitationText(gender) {
-        const texts = {
-            'hombre': 'Quedas<br>Invitado<br>A los<br>Jueves Gays',
-            'mujer': 'Quedas<br>Invitada<br>A los<br>Jueves Gays',
-            'no-decir': 'Quedas<br>Invitade<br>A los<br>Jueves Gays',
-            'apache': 'Cuéntanos<br>Cómo te sientes<br>En los<br>Jueves Gays'
-        };
+    <script>
+        // Variables globales
+        let selectedGender = null;
+        let isJaime = false;
+        const modal = document.getElementById('genderModal');
+        const invitationText = document.getElementById('invitationText');
 
-        invitationText.innerHTML = texts[gender] || texts['no-decir'];
-        
-        // Agregar clase para texto más pequeño en mensajes largos
-        if (gender === 'apache') {
-            invitationText.classList.add('smaller-text');
-        } else {
-            invitationText.classList.remove('smaller-text');
-        }
-    }
+        // Función para actualizar el texto de invitación según el género
+        function updateInvitationText(gender) {
+            const texts = {
+                'hombre': 'Quedas<br>Invitado<br>A los<br>Jueves Gays',
+                'mujer': 'Quedas<br>Invitada<br>A los<br>Jueves Gays',
+                'no-decir': 'Quedas<br>Invitade<br>A los<br>Jueves Gays',
+                'apache': 'Cuéntanos<br>Cómo te sientes<br>En los<br>Jueves Gays'
+            };
 
-    // Función para mostrar el warning
-    function showWarning() {
-        const warning = document.getElementById('warning');
-        warning.classList.add('show');
-        setTimeout(() => {
-            warning.classList.remove('show');
-        }, 3000);
-    }
-
-    // Comprobar si ya se seleccionó género anteriormente
-    window.addEventListener('DOMContentLoaded', () => {
-        // El modal siempre está visible al cargar la página
-        // No verificamos sessionStorage para que siempre aparezca
-
-        // Event listeners para los botones de género
-        const genderButtons = document.querySelectorAll('.gender-option');
-        genderButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                selectedGender = e.target.dataset.gender;
-                modal.classList.add('hidden');
-                updateInvitationText(selectedGender);
-            });
-        });
-
-        // Cargar estado de los checkboxes
-        const checkboxes = document.querySelectorAll('.achievement input[type="checkbox"]');
-        
-        checkboxes.forEach(checkbox => {
-            const saved = sessionStorage.getItem(checkbox.id);
-            if (saved === 'true') {
-                checkbox.checked = true;
-                checkbox.closest('.achievement').classList.add('completed');
+            let text = texts[gender] || texts['no-decir'];
+            
+            // Añadir easter egg a las mayúsculas en los textos cortos
+            if (gender !== 'apache') {
+                text = text.replace(/Q/g, '<span class="easter-egg-letter">Q</span>');
+                text = text.replace(/I/g, '<span class="easter-egg-letter">I</span>');
+                text = text.replace(/A/g, '<span class="easter-egg-letter">A</span>');
+                text = text.replace(/J/g, '<span class="easter-egg-letter">J</span>');
+                text = text.replace(/G/g, '<span class="easter-egg-letter">G</span>');
+            }
+            
+            invitationText.innerHTML = text;
+            
+            // Agregar clase para texto más pequeño en mensajes largos
+            if (gender === 'apache') {
+                invitationText.classList.add('smaller-text');
+            } else {
+                invitationText.classList.remove('smaller-text');
             }
 
-            checkbox.addEventListener('change', (e) => {
-                // Mostrar warning solo cuando se marca el logro5 (logro de Jaime)
-                if (checkbox.checked && checkbox.id === 'logro5') {
-                    showWarning();
-                }
-                
-                sessionStorage.setItem(checkbox.id, checkbox.checked);
-                if (checkbox.checked) {
-                    checkbox.closest('.achievement').classList.add('completed');
-                } else {
-                    checkbox.closest('.achievement').classList.remove('completed');
-                }
+            // Agregar event listeners al easter egg
+            setTimeout(() => {
+                const easterEggLetters = document.querySelectorAll('.easter-egg-letter');
+                easterEggLetters.forEach(letter => {
+                    letter.addEventListener('click', activateJaimeMode);
+                });
+            }, 100);
+        }
+
+        // Función para mostrar el warning
+        function showWarning() {
+            const warning = document.getElementById('warning');
+            warning.classList.add('show');
+            setTimeout(() => {
+                warning.classList.remove('show');
+            }, 3000);
+        }
+
+        // Función para activar el modo Jaime (Easter Egg)
+        function activateJaimeMode() {
+            if (!isJaime) {
+                isJaime = true;
+                const welcomeBanner = document.getElementById('welcomeBanner');
+                welcomeBanner.classList.add('show');
+                setTimeout(() => {
+                    welcomeBanner.classList.remove('show');
+                }, 4000);
+            }
+        }
+
+        // Inicialización al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            // Event listeners para los botones de género
+            const genderButtons = document.querySelectorAll('.gender-option');
+            genderButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    selectedGender = e.target.dataset.gender;
+                    modal.classList.add('hidden');
+                    updateInvitationText(selectedGender);
+                });
+            });
+
+            // Cargar estado de los checkboxes
+            const checkboxes = document.querySelectorAll('.achievement input[type="checkbox"]');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    // Mostrar warning solo cuando se marca el logro5 y no es Jaime
+                    if (checkbox.checked && checkbox.id === 'logro5' && !isJaime) {
+                        showWarning();
+                        // Desmarcar el checkbox si no es Jaime
+                        setTimeout(() => {
+                            checkbox.checked = false;
+                            checkbox.closest('.achievement').classList.remove('completed');
+                        }, 100);
+                        return;
+                    }
+                    
+                    if (checkbox.checked) {
+                        checkbox.closest('.achievement').classList.add('completed');
+                    } else {
+                        checkbox.closest('.achievement').classList.remove('completed');
+                    }
+                });
             });
         });
-    });
-</script>
-```
-
+    </script>
 </body>
 </html>
