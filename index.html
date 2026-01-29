@@ -3,676 +3,684 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jueves Gays</title>
+    <title>Diagrama de Flujo - Minishell 42</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(45deg, 
-                #FF1493 0%, 
-                #FF69B4 15%, 
-                #FFB6C1 30%,
-                #FFC0CB 45%,
-                #FF69B4 60%, 
-                #FF1493 75%,
-                #C71585 90%,
-                #FF1493 100%);
-            background-size: 400% 400%;
-            animation: pinkGradient 6s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            overflow-x: hidden;
-            position: relative;
         }
-
-        @keyframes pinkGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Estrellas brillantes */
-        .sparkle {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #FFB6C1;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            animation: sparkleAnimation 2s ease-in-out infinite;
-            opacity: 0;
-            filter: drop-shadow(0 0 8px #FF69B4);
-        }
-
-        @keyframes sparkleAnimation {
-            0%, 100% { 
-                opacity: 0; 
-                transform: scale(0) rotate(0deg);
-            }
-            50% { 
-                opacity: 1; 
-                transform: scale(1) rotate(180deg);
-            }
-        }
-
-        .sparkle:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
-        .sparkle:nth-child(2) { top: 25%; right: 15%; animation-delay: 0.4s; }
-        .sparkle:nth-child(3) { top: 60%; left: 10%; animation-delay: 0.8s; }
-        .sparkle:nth-child(4) { top: 45%; right: 25%; animation-delay: 1.2s; }
-        .sparkle:nth-child(5) { bottom: 20%; left: 30%; animation-delay: 1.6s; }
-        .sparkle:nth-child(6) { bottom: 35%; right: 20%; animation-delay: 0.2s; }
-        .sparkle:nth-child(7) { top: 70%; left: 45%; animation-delay: 0.6s; }
-        .sparkle:nth-child(8) { top: 15%; left: 60%; animation-delay: 1s; }
-
-        /* Corazones flotantes */
-        .heart {
-            position: absolute;
-            font-size: 30px;
-            animation: floatHeart 6s ease-in-out infinite;
-            opacity: 0.7;
-        }
-
-        @keyframes floatHeart {
-            0%, 100% {
-                transform: translateY(0) rotate(-10deg);
-            }
-            50% {
-                transform: translateY(-30px) rotate(10deg);
-            }
-        }
-
-        .heart:nth-child(9) { top: 20%; left: 8%; animation-delay: 0s; }
-        .heart:nth-child(10) { top: 50%; right: 12%; animation-delay: 1s; }
-        .heart:nth-child(11) { bottom: 25%; left: 15%; animation-delay: 2s; }
-        .heart:nth-child(12) { top: 65%; right: 8%; animation-delay: 1.5s; }
-
-        /* Burbujas de colores */
-        .bubble {
-            position: absolute;
-            border-radius: 50%;
-            animation: floatBubble 8s ease-in-out infinite;
-            opacity: 0.6;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-        }
-
-        @keyframes floatBubble {
-            0%, 100% {
-                transform: translateY(0) scale(1);
-            }
-            50% {
-                transform: translateY(-40px) scale(1.1);
-            }
-        }
-
-        .bubble:nth-child(13) {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 105, 180, 0.5);
-            top: 15%;
-            left: 35%;
-            animation-delay: 0s;
-        }
-
-        .bubble:nth-child(14) {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 182, 193, 0.5);
-            top: 55%;
-            left: 5%;
-            animation-delay: 1s;
-        }
-
-        .bubble:nth-child(15) {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 20, 147, 0.5);
-            bottom: 30%;
-            right: 10%;
-            animation-delay: 2s;
-        }
-
-        /* Modal de selección de género */
-        #genderModal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            backdrop-filter: blur(10px);
-        }
-
-        #genderModal.hidden {
-            display: none;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, #FF1493 0%, #FF69B4 50%, #FFB6C1 100%);
-            border-radius: 30px;
-            padding: 40px;
-            max-width: 450px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(255, 20, 147, 0.8),
-                        0 0 60px rgba(255, 105, 180, 0.6),
-                        inset 0 0 40px rgba(255, 182, 193, 0.3);
-            animation: modalAppear 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            border: 4px solid rgba(255, 192, 203, 0.5);
-        }
-
-        @keyframes modalAppear {
-            from {
-                transform: scale(0.5) rotate(-5deg);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-        }
-
-        .modal-title {
-            font-size: 2.2em;
-            font-weight: bold;
-            color: white;
-            text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-            animation: titlePulse 2s ease-in-out infinite;
-        }
-
-        @keyframes titlePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .gender-options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .gender-option {
-            background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E1 50%, #FFB6C1 100%);
-            border: 3px solid #FF69B4;
-            border-radius: 20px;
-            padding: 20px;
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #C71585;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .gender-option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 182, 193, 0.8), transparent);
-            transition: left 0.5s;
-        }
-
-        .gender-option:hover::before {
-            left: 100%;
-        }
-
-        .gender-option:hover {
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.6);
-            border-color: #FF1493;
-            background: linear-gradient(135deg, #FFE4E1 0%, #FFB6C1 50%, #FF69B4 100%);
-        }
-
-        .gender-option:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        /* Contenedor principal */
+        
         .container {
-            position: relative;
-            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
             text-align: center;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            max-width: 600px;
-            width: 100%;
-        }
-
-        /* Texto principal */
-        .invitation {
-            color: white;
-            font-size: 3.5em;
-            font-weight: bold;
-            line-height: 1.3;
-            text-shadow: 
-                3px 3px 0px #FF69B4,
-                6px 6px 0px #FF1493,
-                9px 9px 20px rgba(199, 21, 133, 0.6);
-            margin-bottom: 40px;
-            animation: pulse 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 20px rgba(255, 182, 193, 0.8));
-        }
-
-        .invitation .easter-egg-letter {
-            cursor: default;
-            display: inline-block;
-        }
-
-        .invitation.smaller-text {
+            color: #2c3e50;
+            margin-bottom: 10px;
             font-size: 2.5em;
         }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        /* Sección de logros */
-        .achievements-section {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 550px;
-            margin-bottom: 20px;
-        }
-
-        details {
-            background: linear-gradient(135deg, #FF69B4 0%, #FF1493 50%, #C71585 100%);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.6),
-                        0 0 40px rgba(255, 105, 180, 0.4);
-            border: 3px solid rgba(255, 182, 193, 0.5);
-        }
-
-        summary {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            padding: 10px;
-            list-style: none;
+        
+        .subtitle {
             text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.2em;
         }
-
-        summary::-webkit-details-marker {
-            display: none;
+        
+        .phases-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
-
-        summary::after {
-            content: ' ▼';
-            font-size: 0.8em;
+        
+        .phase {
+            border: 3px solid #3498db;
+            border-radius: 15px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            transition: all 0.3s ease;
         }
-
-        details[open] summary::after {
-            content: ' ▲';
+        
+        .phase:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
         }
-
-        .achievements-list {
-            margin-top: 20px;
-            text-align: left;
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-
-        .achievements-list::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        .achievements-list::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-        }
-
-        .achievements-list::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 10px;
-        }
-
-        .achievements-list::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        .achievement {
+        
+        .phase-header {
             display: flex;
             align-items: center;
-            padding: 15px;
-            margin: 10px 0;
-            background: linear-gradient(135deg, rgba(255, 240, 245, 0.98) 0%, rgba(255, 182, 193, 0.95) 100%);
-            border-radius: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(255, 105, 180, 0.3);
-            border: 2px solid rgba(255, 105, 180, 0.2);
-        }
-
-        .achievement:hover {
-            transform: translateX(8px);
-            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.5);
-            border-color: #FF69B4;
-        }
-
-        .achievement input[type="checkbox"] {
-            width: 28px;
-            height: 28px;
-            margin-right: 12px;
+            margin-bottom: 20px;
             cursor: pointer;
-            accent-color: #ff1493;
         }
-
-        .achievement .emoji {
-            font-size: 1.8em;
-            margin-right: 12px;
-        }
-
-        .achievement label {
-            font-size: 1.1em;
-            color: #333;
-            cursor: pointer;
-            flex: 1;
-            font-weight: 600;
-        }
-
-        .achievement.completed {
-            opacity: 0.6;
-            background: linear-gradient(135deg, rgba(200, 200, 200, 0.9) 0%, rgba(180, 180, 180, 0.9) 100%);
-        }
-
-        .achievement.completed label {
-            text-decoration: line-through;
-        }
-
-        /* Warning message */
-        .warning {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+        
+        .phase-number {
+            background: #3498db;
             color: white;
-            padding: 20px 40px;
-            border-radius: 15px;
-            font-weight: bold;
-            font-size: 1.3em;
-            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.5);
-            z-index: 1000;
-            opacity: 0;
-            transition: all 0.4s ease;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .warning.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        /* Welcome banner */
-        .welcome-banner {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            color: white;
-            padding: 25px 50px;
-            border-radius: 20px;
-            font-weight: bold;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.5em;
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
-            z-index: 1000;
-            opacity: 0;
-            transition: all 0.4s ease;
-            border: 3px solid rgba(255, 255, 255, 0.5);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
         }
-
-        .welcome-banner.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
+        
+        .phase-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            font-weight: bold;
+            flex-grow: 1;
         }
-
-        @media (max-width: 480px) {
-            .invitation {
-                font-size: 2.5em;
-            }
-
-            .invitation.smaller-text {
-                font-size: 1.8em;
-            }
-
-            .achievement label {
-                font-size: 0.95em;
-            }
-
-            .modal-content {
-                padding: 30px 20px;
-            }
-
-            .modal-title {
-                font-size: 1.8em;
-            }
-
-            .gender-option {
-                font-size: 1em;
-                padding: 16px;
-            }
+        
+        .phase-duration {
+            background: #e74c3c;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .phase-content {
+            margin-top: 20px;
+        }
+        
+        .subsection {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .subsection h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .item {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            transition: all 0.2s;
+        }
+        
+        .item:hover {
+            background: #d5dbdb;
+            transform: translateX(5px);
+        }
+        
+        .item-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .item-desc {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+        }
+        
+        .flow-step {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            width: 80%;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            position: relative;
+        }
+        
+        .flow-step::after {
+            content: '↓';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2em;
+            color: #3498db;
+        }
+        
+        .flow-step:last-child::after {
+            content: '↻';
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .checklist li::before {
+            content: '☐';
+            margin-right: 10px;
+            font-size: 1.3em;
+            color: #3498db;
+        }
+        
+        .file-tree {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+        
+        .file-tree .directory {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .file-tree .file {
+            color: #2ecc71;
+        }
+        
+        .file-tree .comment {
+            color: #95a5a6;
+            margin-left: 20px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning::before {
+            content: '⚠️ ';
+            font-size: 1.2em;
+        }
+        
+        .tip {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .tip::before {
+            content: '💡 ';
+            font-size: 1.2em;
+        }
+        
+        .stages-timeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        
+        .stage-card {
+            flex: 1;
+            min-width: 200px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-top: 5px solid #3498db;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stage-card h4 {
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .stage-card p {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        .stage-card .duration {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <!-- Modal de selección de género -->
-    <div id="genderModal">
-        <div class="modal-content">
-            <div class="modal-title">✨ ¿Cómo te identificas? ✨</div>
-            <div class="gender-options">
-                <button class="gender-option" data-gender="hombre">👨 Hombre</button>
-                <button class="gender-option" data-gender="mujer">👩 Mujer</button>
-                <button class="gender-option" data-gender="no-decir">🤐 Prefiero no decirlo</button>
-                <button class="gender-option" data-gender="apache">🚁 Helicóptero Apache</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Warning message -->
-    <div class="warning" id="warning">¡No eres Jaime!</div>
-
-    <!-- Welcome banner -->
-    <div class="welcome-banner" id="welcomeBanner">🎉 ¡Bienvenido Jaime! 🎉</div>
-
-    <!-- Decoraciones -->
-    <div class="sparkle"></div>
-    <div class="sparkle"></div>
-    <div class="sparkle"></div>
-    <div class="sparkle"></div>
-    <div class="sparkle"></div>
-    <div class="sparkle"></div>
-    <div class="sparkle"></div>
-    <div class="sparkle"></div>
-    
-    <div class="heart">💖</div>
-    <div class="heart">💕</div>
-    <div class="heart">💗</div>
-    <div class="heart">💝</div>
-    
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-
-    <!-- Contenido principal -->
     <div class="container">
-        <div class="invitation" id="invitationText">
-            Quedas<br>
-            Invitade<br>
-            A los<br>
-            Jueves Gays
+        <h1>🖥️ Proyecto MINISHELL</h1>
+        <p class="subtitle">Diagrama de Acción Completo - Escuela 42</p>
+        
+        <!-- FLUJO GENERAL -->
+        <div class="phase" style="background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); border-color: #fdcb6e;">
+            <div class="phase-header">
+                <div class="phase-number" style="background: #fdcb6e;">🎯</div>
+                <div class="phase-title">Flujo General del Minishell</div>
+            </div>
+            <div class="flow-diagram">
+                <div class="flow-step">1. INICIALIZACIÓN<br><small>Señales, Variables de Entorno</small></div>
+                <div class="flow-step">2. MOSTRAR PROMPT<br><small>minishell> </small></div>
+                <div class="flow-step">3. LEER ENTRADA<br><small>readline()</small></div>
+                <div class="flow-step">4. LEXER/TOKENIZACIÓN<br><small>Dividir en tokens</small></div>
+                <div class="flow-step">5. PARSING<br><small>Construir AST, validar sintaxis</small></div>
+                <div class="flow-step">6. EXPANSIÓN<br><small>Variables $VAR, $?</small></div>
+                <div class="flow-step">7. EJECUCIÓN<br><small>Builtins o fork/execve</small></div>
+                <div class="flow-step">8. CLEANUP<br><small>Liberar memoria, actualizar $?</small></div>
+            </div>
         </div>
-    </div>
-
-    <!-- Sección de logros -->
-    <div class="achievements-section">
-        <details>
-            <summary>🏆 Logros 🏆</summary>
-            <div class="achievements-list">
-                <div class="achievement" data-id="0">
-                    <input type="checkbox" id="logro0">
-                    <span class="emoji">💅</span>
-                    <label for="logro0">Facha in this gays</label>
+        
+        <!-- FASE 1: APRENDIZAJE -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">1</div>
+                <div class="phase-title">Fase de Aprendizaje de Conceptos</div>
+                <div class="phase-duration">1-2 semanas</div>
+            </div>
+            
+            <div class="phase-content">
+                <div class="subsection">
+                    <h3>📚 Conceptos Fundamentales a Dominar</h3>
+                    <div class="items-grid">
+                        <div class="item">
+                            <div class="item-title">Procesos</div>
+                            <div class="item-desc">fork(), execve(), wait(), waitpid(), exit()</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">Pipes</div>
+                            <div class="item-desc">pipe(), dup2(), close(), file descriptors</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">Señales</div>
+                            <div class="item-desc">SIGINT, SIGQUIT, signal(), gestión de interrupciones</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">Variables de Entorno</div>
+                            <div class="item-desc">getenv(), setenv(), unsetenv(), $PATH</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">Parsing</div>
+                            <div class="item-desc">Tokenización, lexer, manejo de comillas</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">Redirecciones</div>
+                            <div class="item-desc">&lt;, &gt;, &lt;&lt;, &gt;&gt;, file descriptors</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="achievement" data-id="1">
-                    <input type="checkbox" id="logro1">
-                    <span class="emoji">🎉</span>
-                    <label for="logro1">Asistir a 20 Jueves Gays</label>
-                </div>
-                <div class="achievement" data-id="2">
-                    <input type="checkbox" id="logro2">
-                    <span class="emoji">👐</span>
-                    <label for="logro2">Meter mano a miembros</label>
-                </div>
-                <div class="achievement" data-id="3">
-                    <input type="checkbox" id="logro3">
-                    <span class="emoji">⭐</span>
-                    <label for="logro3">Carol's favorite's</label>
-                </div>
-                <div class="achievement" data-id="4">
-                    <input type="checkbox" id="logro4">
-                    <span class="emoji">🤪</span>
-                    <label for="logro4">Conocer los Martes locos</label>
-                </div>
-                <div class="achievement" data-id="5">
-                    <input type="checkbox" id="logro5">
-                    <span class="emoji">🖼️</span>
-                    <label for="logro5">Tener un retrato en el 100mon</label>
+                
+                <div class="tip">
+                    <strong>Consejo:</strong> Lee todas las man pages antes de empezar a programar. 
+                    Especialmente: man fork, man execve, man pipe, man dup2, man signal
                 </div>
             </div>
-        </details>
+        </div>
+        
+        <!-- FASE 2: PLANIFICACIÓN -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">2</div>
+                <div class="phase-title">Fase de Planificación y Diseño</div>
+                <div class="phase-duration">3-5 días</div>
+            </div>
+            
+            <div class="phase-content">
+                <div class="subsection">
+                    <h3>🏗️ Estructuras de Datos</h3>
+                    <div class="items-grid">
+                        <div class="item">
+                            <div class="item-title">t_token</div>
+                            <div class="item-desc">Tipo (WORD, PIPE, REDIR), valor, posición</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">t_cmd</div>
+                            <div class="item-desc">Path del comando, array de argumentos, redirecciones</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">t_pipeline</div>
+                            <div class="item-desc">Lista de comandos conectados por pipes</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">t_redir</div>
+                            <div class="item-desc">Tipo de redirección, archivo/delimitador</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">t_env</div>
+                            <div class="item-desc">Lista enlazada o hash table de variables</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">t_shell</div>
+                            <div class="item-desc">Estado global: env, exit_code, signals</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="warning">
+                    <strong>Importante:</strong> Diseña tus estructuras antes de programar. 
+                    Cambiarlas después es mucho más difícil.
+                </div>
+            </div>
+        </div>
+        
+        <!-- FASE 3: ESTRUCTURA DE ARCHIVOS -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">3</div>
+                <div class="phase-title">Estructura de Archivos del Proyecto</div>
+                <div class="phase-duration">1 día</div>
+            </div>
+            
+            <div class="phase-content">
+                <div class="subsection">
+                    <h3>📁 Organización del Código</h3>
+                    <div class="file-tree">
+<span class="directory">minishell/</span>
+├── <span class="file">Makefile</span>                    <span class="comment"># Compilación</span>
+├── <span class="directory">includes/</span>
+│   ├── <span class="file">minishell.h</span>             <span class="comment"># Definiciones principales</span>
+│   ├── <span class="file">parser.h</span>                <span class="comment"># Parser y lexer</span>
+│   └── <span class="file">executor.h</span>              <span class="comment"># Ejecución</span>
+├── <span class="directory">srcs/</span>
+│   ├── <span class="file">main.c</span>                  <span class="comment"># Punto de entrada</span>
+│   ├── <span class="directory">init/</span>
+│   │   ├── <span class="file">init_shell.c</span>        <span class="comment"># Inicialización</span>
+│   │   └── <span class="file">signals.c</span>           <span class="comment"># Manejo de señales</span>
+│   ├── <span class="directory">parser/</span>
+│   │   ├── <span class="file">lexer.c</span>             <span class="comment"># Tokenización</span>
+│   │   ├── <span class="file">parser.c</span>            <span class="comment"># AST</span>
+│   │   ├── <span class="file">quotes.c</span>            <span class="comment"># Comillas</span>
+│   │   └── <span class="file">expand.c</span>            <span class="comment"># Expansión $VAR</span>
+│   ├── <span class="directory">executor/</span>
+│   │   ├── <span class="file">executor.c</span>          <span class="comment"># Ejecución principal</span>
+│   │   ├── <span class="file">pipeline.c</span>          <span class="comment"># Pipes</span>
+│   │   ├── <span class="file">redirections.c</span>      <span class="comment"># Redirecciones</span>
+│   │   └── <span class="file">path.c</span>              <span class="comment"># Búsqueda en $PATH</span>
+│   ├── <span class="directory">builtins/</span>
+│   │   ├── <span class="file">cd.c</span>                <span class="comment"># Change directory</span>
+│   │   ├── <span class="file">echo.c</span>              <span class="comment"># Echo -n</span>
+│   │   ├── <span class="file">env.c</span>               <span class="comment"># Mostrar env</span>
+│   │   ├── <span class="file">export.c</span>            <span class="comment"># Export vars</span>
+│   │   ├── <span class="file">unset.c</span>             <span class="comment"># Unset vars</span>
+│   │   ├── <span class="file">pwd.c</span>               <span class="comment"># Print WD</span>
+│   │   └── <span class="file">exit.c</span>              <span class="comment"># Exit shell</span>
+│   ├── <span class="directory">env/</span>
+│   │   └── <span class="file">env_utils.c</span>         <span class="comment"># Gestión env</span>
+│   └── <span class="directory">utils/</span>
+│       ├── <span class="file">errors.c</span>            <span class="comment"># Errores</span>
+│       ├── <span class="file">memory.c</span>            <span class="comment"># Memoria</span>
+│       └── <span class="file">utils.c</span>             <span class="comment"># Utilidades</span>
+└── <span class="directory">libft/</span>                        <span class="comment"># Tu libft</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FASE 4: PLAN DE EJECUCIÓN -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">4</div>
+                <div class="phase-title">Plan de Ejecución por Etapas</div>
+                <div class="phase-duration">4-6 semanas</div>
+            </div>
+            
+            <div class="phase-content">
+                <div class="subsection">
+                    <h3>🚀 Desarrollo Incremental</h3>
+                    <div class="stages-timeline">
+                        <div class="stage-card">
+                            <h4>Etapa 1: Setup</h4>
+                            <p>Makefile, estructura, main.c básico</p>
+                            <span class="duration">2-3 días</span>
+                        </div>
+                        <div class="stage-card">
+                            <h4>Etapa 2: Readline</h4>
+                            <p>Prompt, lectura de entrada, historial</p>
+                            <span class="duration">1-2 días</span>
+                        </div>
+                        <div class="stage-card">
+                            <h4>Etapa 3: Builtins básicos</h4>
+                            <p>echo, pwd, env sin opciones</p>
+                            <span class="duration">2-3 días</span>
+                        </div>
+                        <div class="stage-card">
+                            <h4>Etapa 4: Comandos simples</h4>
+                            <p>PATH, fork, execve, wait</p>
+                            <span class="duration">3-4 días</span>
+                        </div>
+                        <div class="stage-card">
+                            <h4>Etapa 5: Lexer</h4>
+                            <p>Tokenización básica</p>
+                            <span class="duration">2-3 días</span>
+                        </div>
+                        <div class="stage-card">
+                            <h4>Etapa 6: Comillas</h4>
+                            <p>Simples, dobles, escapado</p>
+                            <span class="duration">2-3 días</span>
+                        </div>
+                        <div class="stage-card">
+                            <h4>Etapa 7: Variables</h4>
+                            <p>$VAR, $?, expansión</p>
+                            <span class="duration">2-3 días</span>
+                        </div>
+                        <div class="stage-card">
+                            <h4>Etapa 8: Redirecciones</h4>
+                            <p>&lt;, &gt;, &lt;&lt;, &gt;&gt;</p>
+                            <span class="duration">3-4 días</span>
+                        </div>
+                        <div class="stage-card">
+                            <h4>Etapa 9: Pipes</h4>
+                            <p>Múltiples pipes, fd management</p>
+                            <span class="duration">4-5 días</span>
+                        </div>
+                        <div class="stage-card">
+                            <h4>Etapa 10: Builtins avanzados</h4>
+                            <p>cd, export, unset, exit</p>
+                            <span class="duration">3-4 días</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="warning">
+                    <strong>Regla de oro:</strong> No pases a la siguiente etapa hasta que la actual funcione PERFECTAMENTE.
+                    Arreglar bugs tempranos es más fácil que arreglarlos cuando tienes todo el código encima.
+                </div>
+            </div>
+        </div>
+        
+        <!-- FASE 5: TESTING -->
+        <div class="phase">
+            <div class="phase-header">
+                <div class="phase-number">5</div>
+                <div class="phase-title">Testing y Depuración</div>
+                <div class="phase-duration">1 semana</div>
+            </div>
+            
+            <div class="phase-content">
+                <div class="subsection">
+                    <h3>✅ Checklist de Validación</h3>
+                    <ul class="checklist">
+                        <li>No hay memory leaks (valgrind clean)</li>
+                        <li>Todos los builtins funcionan correctamente</li>
+                        <li>Pipes múltiples funcionan (ej: cat | grep | wc)</li>
+                        <li>Todas las redirecciones funcionan</li>
+                        <li>Variables se expanden correctamente ($VAR, $?)</li>
+                        <li>Comillas simples y dobles funcionan</li>
+                        <li>Señales (Ctrl+C, Ctrl+D, Ctrl+\\) como en bash</li>
+                        <li>Historial funciona (flechas arriba/abajo)</li>
+                        <li>No hay warnings de compilación</li>
+                        <li>Respeta la norma de 42</li>
+                        <li>Makefile funciona (all, clean, fclean, re)</li>
+                        <li>Casos edge: input vacío, solo espacios, etc.</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h3>🔧 Herramientas de Testing</h3>
+                    <div class="items-grid">
+                        <div class="item">
+                            <div class="item-title">Valgrind</div>
+                            <div class="item-desc">valgrind --leak-check=full ./minishell</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">Bash Comparison</div>
+                            <div class="item-desc">Compara cada comando con bash</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">Testers 42</div>
+                            <div class="item-desc">Busca minishell_tester en GitHub</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title">strace</div>
+                            <div class="item-desc">Ver todas las system calls</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tip">
+                    <strong>Pro Tip:</strong> Prueba inmediatamente después de implementar cada feature. 
+                    No esperes a tener todo terminado para empezar a testear.
+                </div>
+            </div>
+        </div>
+        
+        <!-- ERRORES COMUNES -->
+        <div class="phase" style="background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); border-color: #e17055;">
+            <div class="phase-header">
+                <div class="phase-number" style="background: #e17055;">⚠️</div>
+                <div class="phase-title">Errores Comunes a Evitar</div>
+            </div>
+            
+            <div class="phase-content">
+                <div class="items-grid">
+                    <div class="item" style="border-left-color: #e74c3c;">
+                        <div class="item-title">File Descriptor Leaks</div>
+                        <div class="item-desc">No cerrar todos los fd que abres. Especialmente crítico en pipes.</div>
+                    </div>
+                    <div class="item" style="border-left-color: #e74c3c;">
+                        <div class="item-title">Zombie Processes</div>
+                        <div class="item-desc">No hacer wait() de todos los procesos hijos.</div>
+                    </div>
+                    <div class="item" style="border-left-color: #e74c3c;">
+                        <div class="item-title">Memory Leaks</div>
+                        <div class="item-desc">No liberar memoria asignada con malloc/strdup.</div>
+                    </div>
+                    <div class="item" style="border-left-color: #e74c3c;">
+                        <div class="item-title">Double Free</div>
+                        <div class="item-desc">Liberar la misma memoria dos veces.</div>
+                    </div>
+                    <div class="item" style="border-left-color: #e74c3c;">
+                        <div class="item-title">Buffer Overflow</div>
+                        <div class="item-desc">No validar tamaños al copiar strings.</div>
+                    </div>
+                    <div class="item" style="border-left-color: #e74c3c;">
+                        <div class="item-title">Race Conditions</div>
+                        <div class="item-desc">Problemas con señales y acceso concurrente.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CONSEJOS FINALES -->
+        <div class="phase" style="background: linear-gradient(135deg, #a8e6cf 0%, #56ab2f 100%); border-color: #56ab2f;">
+            <div class="phase-header">
+                <div class="phase-number" style="background: #56ab2f;">💡</div>
+                <div class="phase-title">Consejos para el Éxito</div>
+            </div>
+            
+            <div class="phase-content">
+                <div class="items-grid">
+                    <div class="item" style="border-left-color: #27ae60;">
+                        <div class="item-title">Trabajo en Pareja</div>
+                        <div class="item-desc">Uno piensa, otro escribe. Roten roles regularmente.</div>
+                    </div>
+                    <div class="item" style="border-left-color: #27ae60;">
+                        <div class="item-title">Commits Frecuentes</div>
+                        <div class="item-desc">Usa git con mensajes descriptivos. Permite volver atrás si algo falla.</div>
+                    </div>
+                    <div class="item" style="border-left-color: #27ae60;">
+                        <div class="item-title">Documenta tu Código</div>
+                        <div class="item-desc">Comentarios claros te ahorrarán tiempo después.</div>
+                    </div>
+                    <div class="item" style="border-left-color: #27ae60;">
+                        <div class="item-title">Testing Continuo</div>
+                        <div class="item-desc">Prueba cada función inmediatamente después de escribirla.</div>
+                    </div>
+                    <div class="item" style="border-left-color: #27ae60;">
+                        <div class="item-title">No Busques Perfección</div>
+                        <div class="item-desc">Primero haz que funcione, luego optimiza.</div>
+                    </div>
+                    <div class="item" style="border-left-color: #27ae60;">
+                        <div class="item-title">Pide Ayuda</div>
+                        <div class="item-desc">Si estás bloqueado más de 2 horas, pregunta a compañeros.</div>
+                    </div>
+                    <div class="item" style="border-left-color: #27ae60;">
+                        <div class="item-title">Descansos Regulares</div>
+                        <div class="item-desc">Tu cerebro necesita tiempo para procesar conceptos complejos.</div>
+                    </div>
+                    <div class="item" style="border-left-color: #27ae60;">
+                        <div class="item-title">Lee el Subject</div>
+                        <div class="item-desc">Vuelve a leer el subject varias veces durante el proyecto.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; text-align: center; color: white;">
+            <h2 style="margin-bottom: 15px;">🚀 ¡Buena Suerte!</h2>
+            <p style="font-size: 1.2em; line-height: 1.6;">
+                Minishell es un proyecto desafiante pero extremadamente educativo.<br>
+                Sigue este plan paso a paso y tendrás un shell del que estar orgulloso.<br>
+                <strong>¡Happy Coding!</strong>
+            </p>
+        </div>
     </div>
-
-    <script>
-        // Variables globales
-        let selectedGender = null;
-        let isJaime = false;
-        const modal = document.getElementById('genderModal');
-        const invitationText = document.getElementById('invitationText');
-
-        // Función para actualizar el texto de invitación según el género
-        function updateInvitationText(gender) {
-            const texts = {
-                'hombre': 'Quedas<br>Invitado<br>A los<br>Jueves Gays',
-                'mujer': 'Quedas<br>Invitada<br>A los<br>Jueves Gays',
-                'no-decir': 'Quedas<br>Invitade<br>A los<br>Jueves Gays',
-                'apache': 'Cuéntanos<br>Cómo te sientes<br>En los<br>Jueves Gays'
-            };
-
-            let text = texts[gender] || texts['no-decir'];
-            
-            // Añadir easter egg a las mayúsculas en los textos cortos
-            if (gender !== 'apache') {
-                text = text.replace(/Q/g, '<span class="easter-egg-letter">Q</span>');
-                text = text.replace(/I/g, '<span class="easter-egg-letter">I</span>');
-                text = text.replace(/A/g, '<span class="easter-egg-letter">A</span>');
-                text = text.replace(/J/g, '<span class="easter-egg-letter">J</span>');
-                text = text.replace(/G/g, '<span class="easter-egg-letter">G</span>');
-            }
-            
-            invitationText.innerHTML = text;
-            
-            // Agregar clase para texto más pequeño en mensajes largos
-            if (gender === 'apache') {
-                invitationText.classList.add('smaller-text');
-            } else {
-                invitationText.classList.remove('smaller-text');
-            }
-
-            // Agregar event listeners al easter egg
-            setTimeout(() => {
-                const easterEggLetters = document.querySelectorAll('.easter-egg-letter');
-                easterEggLetters.forEach(letter => {
-                    letter.addEventListener('click', activateJaimeMode);
-                });
-            }, 100);
-        }
-
-        // Función para mostrar el warning
-        function showWarning() {
-            const warning = document.getElementById('warning');
-            warning.classList.add('show');
-            setTimeout(() => {
-                warning.classList.remove('show');
-            }, 3000);
-        }
-
-        // Función para activar el modo Jaime (Easter Egg)
-        function activateJaimeMode() {
-            if (!isJaime) {
-                isJaime = true;
-                const welcomeBanner = document.getElementById('welcomeBanner');
-                welcomeBanner.classList.add('show');
-                setTimeout(() => {
-                    welcomeBanner.classList.remove('show');
-                }, 4000);
-            }
-        }
-
-        // Inicialización al cargar la página
-        window.addEventListener('DOMContentLoaded', () => {
-            // Event listeners para los botones de género
-            const genderButtons = document.querySelectorAll('.gender-option');
-            genderButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    selectedGender = e.target.dataset.gender;
-                    modal.classList.add('hidden');
-                    updateInvitationText(selectedGender);
-                });
-            });
-
-            // Cargar estado de los checkboxes
-            const checkboxes = document.querySelectorAll('.achievement input[type="checkbox"]');
-            
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', (e) => {
-                    // Mostrar warning solo cuando se marca el logro5 y no es Jaime
-                    if (checkbox.checked && checkbox.id === 'logro5' && !isJaime) {
-                        showWarning();
-                        // Desmarcar el checkbox si no es Jaime
-                        setTimeout(() => {
-                            checkbox.checked = false;
-                            checkbox.closest('.achievement').classList.remove('completed');
-                        }, 100);
-                        return;
-                    }
-                    
-                    if (checkbox.checked) {
-                        checkbox.closest('.achievement').classList.add('completed');
-                    } else {
-                        checkbox.closest('.achievement').classList.remove('completed');
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>
