@@ -229,6 +229,21 @@
             margin-left: 20px;
         }
         
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        .item-desc a {
+            font-weight: 600;
+        }
+        
         .warning {
             background: #fff3cd;
             border-left: 5px solid #ffc107;
@@ -332,27 +347,55 @@
                     <div class="items-grid">
                         <div class="item">
                             <div class="item-title">Procesos</div>
-                            <div class="item-desc">fork(), execve(), wait(), waitpid(), exit()</div>
+                            <div class="item-desc">
+                                <a href="https://man7.org/linux/man-pages/man2/fork.2.html" target="_blank">fork()</a>, 
+                                <a href="https://man7.org/linux/man-pages/man2/execve.2.html" target="_blank">execve()</a>, 
+                                <a href="https://man7.org/linux/man-pages/man2/wait.2.html" target="_blank">wait()</a>, 
+                                <a href="https://man7.org/linux/man-pages/man2/wait.2.html" target="_blank">waitpid()</a>, 
+                                <a href="https://man7.org/linux/man-pages/man3/exit.3.html" target="_blank">exit()</a>
+                            </div>
                         </div>
                         <div class="item">
                             <div class="item-title">Pipes</div>
-                            <div class="item-desc">pipe(), dup2(), close(), file descriptors</div>
+                            <div class="item-desc">
+                                <a href="https://man7.org/linux/man-pages/man2/pipe.2.html" target="_blank">pipe()</a>, 
+                                <a href="https://man7.org/linux/man-pages/man2/dup.2.html" target="_blank">dup2()</a>, 
+                                <a href="https://man7.org/linux/man-pages/man2/close.2.html" target="_blank">close()</a>, 
+                                file descriptors
+                            </div>
                         </div>
                         <div class="item">
                             <div class="item-title">Señales</div>
-                            <div class="item-desc">SIGINT, SIGQUIT, signal(), gestión de interrupciones</div>
+                            <div class="item-desc">
+                                <a href="https://man7.org/linux/man-pages/man7/signal.7.html" target="_blank">SIGINT</a>, 
+                                SIGQUIT, 
+                                <a href="https://man7.org/linux/man-pages/man2/signal.2.html" target="_blank">signal()</a>, 
+                                gestión de interrupciones
+                            </div>
                         </div>
                         <div class="item">
                             <div class="item-title">Variables de Entorno</div>
-                            <div class="item-desc">getenv(), setenv(), unsetenv(), $PATH</div>
+                            <div class="item-desc">
+                                <a href="https://man7.org/linux/man-pages/man3/getenv.3.html" target="_blank">getenv()</a>, 
+                                <a href="https://man7.org/linux/man-pages/man3/setenv.3.html" target="_blank">setenv()</a>, 
+                                <a href="https://man7.org/linux/man-pages/man3/setenv.3.html" target="_blank">unsetenv()</a>, 
+                                <a href="https://man7.org/linux/man-pages/man7/environ.7.html" target="_blank">$PATH</a>
+                            </div>
                         </div>
                         <div class="item">
                             <div class="item-title">Parsing</div>
-                            <div class="item-desc">Tokenización, lexer, manejo de comillas</div>
+                            <div class="item-desc">
+                                Tokenización, lexer, manejo de comillas 
+                                [<a href="https://man7.org/linux/man-pages/man3/readline.3.html" target="_blank">readline</a>]
+                            </div>
                         </div>
                         <div class="item">
                             <div class="item-title">Redirecciones</div>
-                            <div class="item-desc">&lt;, &gt;, &lt;&lt;, &gt;&gt;, file descriptors</div>
+                            <div class="item-desc">
+                                &lt;, &gt;, &lt;&lt;, &gt;&gt;, 
+                                <a href="https://man7.org/linux/man-pages/man2/open.2.html" target="_blank">open()</a>, 
+                                file descriptors
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -421,43 +464,157 @@
             <div class="phase-content">
                 <div class="subsection">
                     <h3>📁 Organización del Código</h3>
-                    <div class="file-tree">
-<span class="directory">minishell/</span>
-├── <span class="file">Makefile</span>                    <span class="comment"># Compilación</span>
-├── <span class="directory">includes/</span>
-│   ├── <span class="file">minishell.h</span>             <span class="comment"># Definiciones principales</span>
-│   ├── <span class="file">parser.h</span>                <span class="comment"># Parser y lexer</span>
-│   └── <span class="file">executor.h</span>              <span class="comment"># Ejecución</span>
-├── <span class="directory">srcs/</span>
-│   ├── <span class="file">main.c</span>                  <span class="comment"># Punto de entrada</span>
-│   ├── <span class="directory">init/</span>
-│   │   ├── <span class="file">init_shell.c</span>        <span class="comment"># Inicialización</span>
-│   │   └── <span class="file">signals.c</span>           <span class="comment"># Manejo de señales</span>
-│   ├── <span class="directory">parser/</span>
-│   │   ├── <span class="file">lexer.c</span>             <span class="comment"># Tokenización</span>
-│   │   ├── <span class="file">parser.c</span>            <span class="comment"># AST</span>
-│   │   ├── <span class="file">quotes.c</span>            <span class="comment"># Comillas</span>
-│   │   └── <span class="file">expand.c</span>            <span class="comment"># Expansión $VAR</span>
-│   ├── <span class="directory">executor/</span>
-│   │   ├── <span class="file">executor.c</span>          <span class="comment"># Ejecución principal</span>
-│   │   ├── <span class="file">pipeline.c</span>          <span class="comment"># Pipes</span>
-│   │   ├── <span class="file">redirections.c</span>      <span class="comment"># Redirecciones</span>
-│   │   └── <span class="file">path.c</span>              <span class="comment"># Búsqueda en $PATH</span>
-│   ├── <span class="directory">builtins/</span>
-│   │   ├── <span class="file">cd.c</span>                <span class="comment"># Change directory</span>
-│   │   ├── <span class="file">echo.c</span>              <span class="comment"># Echo -n</span>
-│   │   ├── <span class="file">env.c</span>               <span class="comment"># Mostrar env</span>
-│   │   ├── <span class="file">export.c</span>            <span class="comment"># Export vars</span>
-│   │   ├── <span class="file">unset.c</span>             <span class="comment"># Unset vars</span>
-│   │   ├── <span class="file">pwd.c</span>               <span class="comment"># Print WD</span>
-│   │   └── <span class="file">exit.c</span>              <span class="comment"># Exit shell</span>
-│   ├── <span class="directory">env/</span>
-│   │   └── <span class="file">env_utils.c</span>         <span class="comment"># Gestión env</span>
-│   └── <span class="directory">utils/</span>
-│       ├── <span class="file">errors.c</span>            <span class="comment"># Errores</span>
-│       ├── <span class="file">memory.c</span>            <span class="comment"># Memoria</span>
-│       └── <span class="file">utils.c</span>             <span class="comment"># Utilidades</span>
-└── <span class="directory">libft/</span>                        <span class="comment"># Tu libft</span>
+                    <div style="background: #2c3e50; padding: 20px; border-radius: 10px; overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-family: 'Courier New', monospace; color: #ecf0f1; font-size: 14px;">
+                            <tr>
+                                <td style="padding: 4px 0; width: 50%;"><span style="color: #3498db; font-weight: bold;">minishell/</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Directorio raíz</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0;">├── <span style="color: #2ecc71;">Makefile</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Reglas de compilación</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0;">├── <span style="color: #3498db; font-weight: bold;">includes/</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Archivos de cabecera</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 20px;">│   ├── <span style="color: #2ecc71;">minishell.h</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Definiciones principales</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 20px;">│   ├── <span style="color: #2ecc71;">parser.h</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Estructuras y funciones del parser</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 20px;">│   └── <span style="color: #2ecc71;">executor.h</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Estructuras y funciones del executor</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0;">├── <span style="color: #3498db; font-weight: bold;">srcs/</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Código fuente</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 20px;">│   ├── <span style="color: #2ecc71;">main.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Punto de entrada, bucle principal</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 20px;">│   ├── <span style="color: #3498db; font-weight: bold;">init/</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Módulo de inicialización</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">init_shell.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Configuración inicial</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   └── <span style="color: #2ecc71;">signals.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Configuración de señales</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 20px;">│   ├── <span style="color: #3498db; font-weight: bold;">parser/</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Módulo de parsing</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">lexer.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Tokenización</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">parser.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Construcción del AST</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">quotes.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Manejo de comillas</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   └── <span style="color: #2ecc71;">expand.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Expansión de variables</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 20px;">│   ├── <span style="color: #3498db; font-weight: bold;">executor/</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Módulo de ejecución</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">executor.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Lógica principal de ejecución</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">pipeline.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Manejo de pipes</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">redirections.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Redirecciones</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   └── <span style="color: #2ecc71;">path.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Búsqueda en $PATH</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 20px;">│   ├── <span style="color: #3498db; font-weight: bold;">builtins/</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Comandos integrados</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">cd.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Change directory [<a href="https://man7.org/linux/man-pages/man2/chdir.2.html" target="_blank" style="color: #f39c12;">man chdir</a>]</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">echo.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Echo con -n</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">env.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Mostrar variables</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">export.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Exportar variables</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">unset.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Eliminar variables</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">pwd.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Print working directory [<a href="https://man7.org/linux/man-pages/man3/getcwd.3.html" target="_blank" style="color: #f39c12;">man getcwd</a>]</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   └── <span style="color: #2ecc71;">exit.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Salir del shell</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 20px;">│   ├── <span style="color: #3498db; font-weight: bold;">env/</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Gestión de entorno</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   ├── <span style="color: #2ecc71;">env_utils.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Utilidades de entorno</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│   │   └── <span style="color: #2ecc71;">env_expand.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Expansión de $VAR</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 20px;">│   └── <span style="color: #3498db; font-weight: bold;">utils/</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Utilidades generales</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│       ├── <span style="color: #2ecc71;">errors.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Manejo de errores</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│       ├── <span style="color: #2ecc71;">memory.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Gestión de memoria</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0; padding-left: 40px;">│       └── <span style="color: #2ecc71;">utils.c</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Funciones auxiliares</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 4px 0;">└── <span style="color: #3498db; font-weight: bold;">libft/</span></td>
+                                <td style="padding: 4px 0; color: #95a5a6;">Tu librería libft (si la usas)</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -668,6 +825,70 @@
                     <div class="item" style="border-left-color: #27ae60;">
                         <div class="item-title">Lee el Subject</div>
                         <div class="item-desc">Vuelve a leer el subject varias veces durante el proyecto.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- MAN PAGES -->
+        <div class="phase" style="background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); border-color: #fdcb6e;">
+            <div class="phase-header">
+                <div class="phase-number" style="background: #f39c12;">📖</div>
+                <div class="phase-title">Man Pages Esenciales</div>
+            </div>
+            
+            <div class="phase-content">
+                <div class="subsection">
+                    <h3>Enlaces Directos a Manuales</h3>
+                    <div class="items-grid">
+                        <div class="item">
+                            <div class="item-title"><a href="https://man7.org/linux/man-pages/man2/fork.2.html" target="_blank">man fork</a></div>
+                            <div class="item-desc">Creación de procesos hijo</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title"><a href="https://man7.org/linux/man-pages/man2/execve.2.html" target="_blank">man execve</a></div>
+                            <div class="item-desc">Ejecución de programas</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title"><a href="https://man7.org/linux/man-pages/man2/wait.2.html" target="_blank">man wait / waitpid</a></div>
+                            <div class="item-desc">Espera de procesos hijo</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title"><a href="https://man7.org/linux/man-pages/man2/pipe.2.html" target="_blank">man pipe</a></div>
+                            <div class="item-desc">Creación de pipes</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title"><a href="https://man7.org/linux/man-pages/man2/dup.2.html" target="_blank">man dup2</a></div>
+                            <div class="item-desc">Duplicación de file descriptors</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title"><a href="https://man7.org/linux/man-pages/man2/signal.2.html" target="_blank">man signal</a></div>
+                            <div class="item-desc">Manejo de señales</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title"><a href="https://man7.org/linux/man-pages/man3/readline.3.html" target="_blank">man readline</a></div>
+                            <div class="item-desc">Lectura de líneas con historial</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title"><a href="https://man7.org/linux/man-pages/man3/getcwd.3.html" target="_blank">man getcwd</a></div>
+                            <div class="item-desc">Obtener directorio actual</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title"><a href="https://man7.org/linux/man-pages/man2/chdir.2.html" target="_blank">man chdir</a></div>
+                            <div class="item-desc">Cambiar de directorio</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title"><a href="https://man7.org/linux/man-pages/man3/getenv.3.html" target="_blank">man getenv</a></div>
+                            <div class="item-desc">Obtener variables de entorno</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title"><a href="https://man7.org/linux/man-pages/man2/access.2.html" target="_blank">man access</a></div>
+                            <div class="item-desc">Verificar permisos de archivos</div>
+                        </div>
+                        <div class="item">
+                            <div class="item-title"><a href="https://man7.org/linux/man-pages/man2/open.2.html" target="_blank">man open</a></div>
+                            <div class="item-desc">Abrir archivos (redirecciones)</div>
+                        </div>
                     </div>
                 </div>
             </div>
